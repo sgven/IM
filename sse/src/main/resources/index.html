@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>UniMax MESV5</title>
+    <script>
+	if ('EventSource' in window) {
+		console.log('支持SSE');
+		var url = "http:127.0.0.1:8080/subscribe?id=1";
+		var source = new EventSource(url);
+		source.onopen = function (event) {
+			// ...
+			console.log('browser is connected');
+		};
+		source.onmessage = function (event) {
+			// data 就是服务器传回的数据（文本格式）
+			var data = event.data;
+			console.log('onmessage' + data);
+			// handle message
+		};
+
+		
+	}
+    </script>
+<body>
+   <div id="result"></div>
+</body>
+</html>
