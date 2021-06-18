@@ -22,6 +22,8 @@ public class SimpleIMApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
+//		initNettyContextBean();//初始化netty服务需要的上下文bean
+//		initNoRead();//初始化未读数
 		bootNettyServer();
 	}
 
