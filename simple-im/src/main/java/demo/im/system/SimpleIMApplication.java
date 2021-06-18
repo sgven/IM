@@ -41,4 +41,47 @@ public class SimpleIMApplication implements CommandLineRunner {
 		//启动netty
 		new NettyServer(12345).start();
 	}
+
+
+
+//	private void initNettyContextBean() {
+//		this.dao = SpringContextHolder.getBean("operateDao");
+//		this.iRedisProxy = SpringContextHolder.getBean("shardedRedisProxyService");
+//	}
+//
+//	/**
+//	 * 初始化消息未读数
+//	 */
+//	private void initNoRead() {
+////        from IMMsgRelation where isDelete=0 and isRead=0
+//		List<IMMsgRelation> relationList = dao.find(IMMsgRelation.class, new String[] {"isDelete", "isRead"}, new Object[] {0, 0});
+//		if (relationList != null && relationList.size() > 0) {
+//			//未读消息，按接收者分组
+//			Map<String, List<IMMsgRelation>> userGroupMap = relationList.stream().collect(Collectors.groupingBy(e -> e.getRecipientId()));
+//			for (Map.Entry<String, List<IMMsgRelation>> entry : userGroupMap.entrySet()) {
+//				String user = entry.getKey();
+//				int noReadTotalCount = entry.getValue().size();
+//				iRedisProxy.hset(REDIS_KEY_PREFIX_USER_MSG+user, "noReadTotalCount", noReadTotalCount+"");
+//			}
+//		}
+//	}
+//
+//	/**
+//	 * 启动IM接入层服务
+//	 * @throws Exception
+//	 */
+//	private void bootNettyServer() throws Exception {
+//		ConfigurableApplicationContext applicationContext = (ConfigurableApplicationContext) SpringContextHolder.getApplicationContext();
+//		DefaultListableBeanFactory beanFactory = (DefaultListableBeanFactory) applicationContext.getBeanFactory();
+//		int port = 12345;//默认端口
+//		String enable = "yes";//是否启用netty服务
+//		if (beanFactory.containsBean("nettyConfig")) {
+//			this.nettyConfig = SpringContextHolder.getBean("nettyConfig");
+//			port = nettyConfig.getPort();
+//			enable = nettyConfig.getEnable();
+//			if ("yes".equals(enable)) {
+//				new NettyServer(port, iRedisProxy, dao).start();
+//			}
+//		}
+//	}
 }
