@@ -58,11 +58,6 @@
 //                                    appMsgSend.send(JSON.toJSONString(msgContent), user);
 //                                    relation.setIsSend(IMMsgRelation.IS_SEND_YES);
 //                                    imDao.save(relation);
-//
-//                                /*// 发送用户未读数信息
-//                                Map<String, String> noReadMap = iRedisProxy.hgetAll(REDIS_KEY_PREFIX_USER_MSG+user);
-//                                String noReadMsg = JSON.toJSONString(noReadMap);
-//                                appMsgSend.send(noReadMsg, user);*/
 //                                }
 //                            } else if (StringUtils.isNotBlank(msgConentId)) {//走消息推送正常流程
 //                                //避免重复消费

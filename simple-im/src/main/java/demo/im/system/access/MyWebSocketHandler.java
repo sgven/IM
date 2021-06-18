@@ -50,7 +50,8 @@ public class MyWebSocketHandler extends SimpleChannelInboundHandler<TextWebSocke
             //验证通过，绑定用户与channel连接通道
             ctx.channel().attr(AttributeKey.valueOf("user")).set(paramMap.get("uid"));
             ctx.channel().attr(AttributeKey.valueOf("tag")).set(paramMap.get("tag"));
-
+            //在实际项目中的处理
+            //processUserOnline();
         } else if(msg instanceof TextWebSocketFrame){
             //正常的TEXT消息类型
             TextWebSocketFrame frame=(TextWebSocketFrame)msg;
@@ -68,6 +69,40 @@ public class MyWebSocketHandler extends SimpleChannelInboundHandler<TextWebSocke
     protected void channelRead0(ChannelHandlerContext channelHandlerContext, TextWebSocketFrame textWebSocketFrame) throws Exception {
 
     }
+
+//    public static ExecutorService executorService = Executors.newFixedThreadPool(100);
+//    private void processUserOnline() {
+//        //验证用户权限，token
+//        String uid = paramMap.get("uid");
+//        String isLogin = iRedisProxy.get(REDIS_KEY_PREFIX_LOGIN+uid);
+//        if ("1".equals(isLogin)) {
+//            //验证通过，绑定用户与channel连接通道
+//            ctx.channel().attr(AttributeKey.valueOf("user")).set(uid);
+//            ctx.channel().attr(AttributeKey.valueOf("tag")).set(paramMap.get("tag"));
+//            MyChannelHandlerPool.userChanneMap.put(uid, ctx.channel());
+//            if (dao != null) {
+//                //用户上线，推送未发送的消息给APP用户
+//                List<IMMsgRelation> relations = this.dao.find(IMMsgRelation.class, new String[] {"recipientId", "isSend"}, new Object[] {uid, IMMsgRelation.IS_SEND_NO});
+//                if (relations != null && relations.size() > 0) {
+//                    relations.stream().forEach(relation -> {
+//                        //消息排队下发到kafka消息队列，由消费者处理
+//                        MsgBO msgBO = new MsgBO();
+//                        msgBO.setMsgRelationId(relation.getId());
+//                        MestarMsgProducer.send(MesMsgTopic.IM_TOPIC.getCode(), JSONUtil.writeEntity2JSON(msgBO));
+//                    });
+//                }
+//                //用户登录上线只推一次未读消息
+//                //推送未读数给APP用户
+//                Map<String, String> noReadMap = iRedisProxy.hgetAll(REDIS_KEY_PREFIX_USER_MSG+uid);
+//                executorService.execute(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        send(JSON.toJSONString(noReadMap), uid);
+//                    }
+//                });
+//            }
+//        }
+//    }
 
     /**
      * 发送消息给指定用户
